@@ -137,3 +137,45 @@ Execution will stop at breakpoints in Drush/Drupal code.
    - **Run** → **Start Listening for PHP Debug Connections**
 5. Enable debugging: `ddev xdebug`
 6. Open the site in a browser — the breakpoint should be hit
+
+---
+
+## Code Quality Tools (GrumPHP, PHPCS, PHPStan)
+
+We use GrumPHP, PHPCS and PHPStan to check code quality before every commit. This means when you run `git commit`, the tools automatically check your changes. If there is some problem with your code, the commit will not happen until you fix it.
+
+### How hooks are installed
+
+When you run `composer install`, GrumPHP automatically install git pre-commit hook in your `.git/hooks/` folder. You don't need to do anything extra for this.
+
+### Running checks manually
+
+Sometimes you want to run checks without making a commit. You can do this from DDEV console:
+
+**Run all checks with GrumPHP:**
+
+```bash
+ddev exec vendor/bin/grumphp run
+```
+
+**Run only PHPCS (Drupal coding standards):**
+
+```bash
+ddev exec vendor/bin/phpcs
+```
+
+**Run only PHPStan (static analysis):**
+
+```bash
+ddev exec vendor/bin/phpstan analyse
+```
+
+### Temporary bypass pre-commit hook
+
+If you need to commit without running checks (for example, you save work in progress and want to continue later), you can use `--no-verify` flag:
+
+```bash
+git commit -m "wip: some draft changes" --no-verify
+```
+
+**Important:** please use this only when you really need it. The checks exist to keep our code clean and consistent. If you bypass them too often, it can cause problems for other team members.
