@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<ruleset name="DrupalJira">
+  <description>PHP CodeSniffer configuration for DrupalJira custom code.</description>
+
+  <!-- Стандарты Drupal -->
+  <rule ref="Drupal"/>
+  <rule ref="DrupalPractice"/>
+
+  <!-- Проверка только кастомных модулей и тем -->
+  <file>web/modules/custom</file>
+  <file>web/themes/custom</file>
+
+  <!-- Указываем расширения файлов для проверки -->
+  <arg name="extensions" value="php,module,inc,install,test,profile,theme,css,info.yml"/>
+
+  <!-- Флаги вывода: прогресс, цвета, имена правил -->
+  <arg value="p"/>
+  <arg name="colors"/>
+  <arg value="s"/>
+
+</ruleset>

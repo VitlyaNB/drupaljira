@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for DrupalJira Custom module.
+ */
+
+/**
+ * Implements hook_help().
+ */
+function drupaljira_custom_help($route_name, $route_parameters) {
+  return '';
+}

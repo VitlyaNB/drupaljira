@@ -1,0 +1,11 @@
+grumphp:
+  tasks:
+    phpcs:
+      standard: []
+      whitelist_patterns:
+        - /^web\/modules\/custom\/(.*)/
+        - /^web\/themes\/custom\/(.*)/
+    phpstan:
+      configuration: phpstan.neon
+      use_grumphp_paths: false
+      ignore_patterns: []
