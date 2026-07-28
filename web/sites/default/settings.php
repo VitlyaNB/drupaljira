@@ -849,6 +849,7 @@ $settings['migrate_node_migrate_type_classic'] = FALSE;
  * $settings['migrate_source_connection'] = 'migrate';
  * $settings['migrate_file_public_path'] = 'https://drupal7.com';
  * $settings['migrate_file_private_path'] = '/var/www/drupal7';
+ * $settings['config_sync_directory'] = '../config/sync';
  * @endcode
  */
 # $settings['migrate_source_connection'] = '';

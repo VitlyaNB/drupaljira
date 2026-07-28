@@ -10,4 +10,5 @@
  */
 function drupaljira_custom_help($route_name, $route_parameters) {
   return '';
+
 }

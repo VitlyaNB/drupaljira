@@ -179,3 +179,25 @@ git commit -m "wip: some draft changes" --no-verify
 ```
 
 **Important:** please use this only when you really need it. The checks exist to keep our code clean and consistent. If you bypass them too often, it can cause problems for other team members.
+
+---
+
+## Configuration Management (Config Sync)
+
+All site configuration is stored in the filesystem under `config/sync/` and versioned with Git.
+
+### Export configuration (after admin changes)
+
+```bash
+ddev drush cex -y
+```
+
+This exports configuration changes from the database to YAML files. Run it before every commit when you have changed site structure, fields, Views, or system settings.
+
+### Import configuration (after `git pull`)
+
+```bash
+ddev drush cim -y
+```
+
+This applies new configuration YAML files from the repository to your local database. Run it immediately after pulling new commits.
