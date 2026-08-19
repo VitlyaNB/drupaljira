@@ -1,0 +1,33 @@
+uuid: 59154cdc-e7d4-4307-a47b-f9a91db5dc16
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_status
+field_name: field_status
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: backlog_backlog|backlog
+      label: Backlog
+    -
+      value: in_progress_in_progress|in_progress
+      label: 'In Progress'
+    -
+      value: rogress|review
+      label: Review
+    -
+      value: done_done|done
+      label: Done
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
