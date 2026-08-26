@@ -1,0 +1,30 @@
+uuid: 914bd14d-8188-4199-8f1f-26fb402493e3
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_type
+field_name: field_type
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: info_info|info
+      label: Info
+    -
+      value: warning_warning|warning
+      label: Warning
+    -
+      value: success_success|success
+      label: Success
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,6 @@
+<div class="paragraph-code {{ language_class }}">
+  {% if clean_language %}
+    <span class="code-language-badge">{{ clean_language }}</span>
+  {% endif %}
+  <pre><code>{{ paragraph.field_code.value }}</code></pre>
+</div>

@@ -1,0 +1,22 @@
+uuid: 150d46a7-7f14-4337-ae43-83bf7cb06ca2
+langcode: en
+status: true
+dependencies:
+  theme:
+    - drupaljira_theme
+_core:
+  default_config_hash: ydSxdq7R66I8UMC460rOzlfzvlUL4VRbdwc6z9DWaUI
+id: drupaljira_theme_secondary_local_tasks
+theme: drupaljira_theme
+region: highlighted
+weight: -2
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Secondary tabs'
+  label_display: '0'
+  provider: core
+  primary: false
+  secondary: true
+visibility: {  }
