@@ -1,0 +1,20 @@
+.button.field-add-more-submit {
+  margin: initial;
+  padding-left: initial;
+}
+
+.item-list ul,
+.item-list ul li {
+  list-style: none !important;
+}
+
+.path-frontend-editing ul.paragraphs-add-dialog-list li.paragraphs-add-dialog-search {
+  display: list-item;
+  column-span: all;
+}
+
+@media (min-width: 48em) {
+  .path-frontend-editing ul.paragraphs-add-dialog-list li a {
+    line-height: 50px !important;
+  }
+}

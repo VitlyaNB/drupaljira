@@ -1,0 +1,7 @@
+name: 'DrupalJira Kanban'
+type: module
+description: 'Provides Kanban board AJAX drag and drop status updates.'
+core_version_requirement: ^10 || ^11
+package: 'DrupalJira'
+dependencies:
+  - drupal:node

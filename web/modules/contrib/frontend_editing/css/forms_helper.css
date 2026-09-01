@@ -1,0 +1,147 @@
+.path-frontend-editing {
+  position: relative;
+}
+
+.path-frontend-editing .layout-node-form__actions {
+  z-index: 2;
+  display: block;
+}
+
+.path-frontend-editing .layout-node-form__actions .gin-sticky {
+  position: fixed;
+  bottom: 0;
+  padding: 0 15px;
+  border: 1px solid gray;
+  border-radius: 8px;
+  background: white;
+}
+
+body.gin--vertical-toolbar.path-frontend-editing,
+body.gin--horizontal-toolbar.path-frontend-editing,
+body.gin--classic-toolbar.path-frontend-editing,
+body.path-frontend-editing {
+  padding-top: 0 !important;
+}
+
+.path-frontend-editing > h1 {
+  position: fixed;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 80px;
+  margin: 0;
+  cursor: pointer;
+  text-decoration: none;
+  background-color: #f5f7fb;
+  font-size: 1.125em;
+  font-weight: 500;
+}
+
+.path-frontend-editing .block-system-main-block > form {
+  position: relative;
+  border: 0;
+  border-radius: 0;
+}
+
+.path-frontend-editing .dialog-off-canvas-main-canvas {
+  padding-top: 80px;
+}
+
+.path-frontend-editing .gin-secondary-toolbar {
+  display: none;
+}
+
+.frontend-editing-hide-sticky .region-sticky {
+  display: none;
+}
+
+.frontend-editing-hide-sidebar #gin_sidebar {
+  display: none;
+}
+
+.frontend-editing-hide-sidebar.gin--edit-form {
+  padding-inline-end: 0;
+}
+
+body.frontend-editing-hide-sidebar.gin--vertical-toolbar,
+body.frontend-editing-hide-sidebar.gin--horizontal-toolbar,
+body.frontend-editing-hide-sidebar.gin--classic-toolbar {
+  padding-inline-start: 0 !important;
+}
+
+.path-frontend-editing .paragraphs-add-dialog-list {
+  padding: 0 20px;
+  column-count: 1;
+  list-style: none;
+}
+
+@media (min-width: 40em) {
+  .path-frontend-editing .paragraphs-add-dialog-list {
+    column-count: 2;
+    column-gap: 14px;
+  }
+}
+
+@media (min-width: 50em) {
+  .path-frontend-editing .paragraphs-add-dialog-list {
+    column-count: 3;
+    column-gap: 14px;
+  }
+}
+
+@media (min-width: 60em) {
+  .path-frontend-editing .paragraphs-add-dialog-list {
+    column-count: 4;
+    column-gap: 14px;
+  }
+}
+
+.path-frontend-editing .paragraphs-add-dialog-row {
+  position: relative;
+}
+
+.path-frontend-editing .paragraphs-add-dialog-row .paragraph-type-icon {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: block;
+  box-sizing: border-box;
+  border: none;
+  box-shadow: none;
+}
+
+.path-frontend-editing .paragraphs-add-dialog-row img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  border-radius: 5px;
+  background: #fff;
+}
+
+.path-frontend-editing ul.paragraphs-add-dialog-list li {
+  display: inline-block;
+  width: 100%;
+  margin: 0 0 10px 0;
+  list-style: none;
+  text-align: left;
+}
+
+.path-frontend-editing ul.paragraphs-add-dialog-list li a {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 70px;
+  margin: 0;
+  text-align: left;
+  line-height: 45px;
+}
+
+.path-frontend-editing ul.paragraphs-add-dialog-list li.with-icon a {
+  padding-left: 75px;
+}
+
+.path-frontend-editing .field-add-more-submit:hover a {
+  color: #fff;
+}

@@ -2,42 +2,61 @@
 
 /**
  * @file
- * Functions to support theming.
+ * Functions to support theming in the DrupalJira theme.
  */
-
-use Drupal\paragraphs\ParagraphInterface;
 
 /**
- * Implements hook_preprocess_paragraph().
+ * Implements hook_preprocess_views_view().
  */
-function drupaljira_theme_preprocess_paragraph(array &$variables): void {
-  /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
-  $paragraph = $variables['paragraph'];
+function drupaljira_theme_preprocess_views_view(&$variables) {
+  $view = $variables['view'];
 
-  // Вычисляем класс для параграфа code на основе выбранного языка.
-  if ($paragraph->bundle() === 'code' && $paragraph->hasField('field_language')) {
-    $language = $paragraph->get('field_language')->value;
+  if ($view->id() === 'task_board') {
+    $columns = [
+      'backlog' => [],
+      'in_progress' => [],
+      'review' => [],
+      'done' => [],
+    ];
 
-    if (!empty($language)) {
-      $parts = explode('|', $language);
-      $clean_language = explode('_', $parts[0])[0];
-      $variables['language_class'] = 'language-' . strtolower($clean_language);
-      $variables['clean_language'] = strtoupper($clean_language);
-    } else {
-      $variables['language_class'] = 'language-plaintext';
-      $variables['clean_language'] = '';
+    if (!empty($view->result)) {
+      foreach ($view->result as $index => $row) {
+        $node = $row->_entity ?? NULL;
+
+        if (!$node) {
+          continue;
+        }
+
+        $raw_status = strtolower($node->get('field_status')->value ?? '');
+
+        $status_key = 'backlog';
+        if (str_contains($raw_status, 'progress')) {
+          $status_key = 'in_progress';
+        }
+        elseif (str_contains($raw_status, 'review')) {
+          $status_key = 'review';
+        }
+        elseif (str_contains($raw_status, 'done')) {
+          $status_key = 'done';
+        }
+
+        $rendered_row = NULL;
+        if (isset($variables['rows'][0]['#rows'][$index])) {
+          $rendered_row = $variables['rows'][0]['#rows'][$index];
+        }
+        elseif (isset($variables['rows'][$index])) {
+          $rendered_row = $variables['rows'][$index];
+        }
+
+        if ($rendered_row) {
+          $columns[$status_key][] = [
+            '#nid' => $node->id(),
+            '#content' => $rendered_row,
+          ];
+        }
+      }
     }
-  }
 
-  // Вычисляем класс для параграфа callout на основе типа.
-  if ($paragraph->bundle() === 'callout' && $paragraph->hasField('field_callout_type')) {
-    $callout_type = $paragraph->get('field_callout_type')->value;
-    if (!empty($callout_type)) {
-      $parts = explode('|', $callout_type);
-      $clean_type = explode('_', $parts[0])[0];
-      $variables['callout_class'] = 'callout-' . strtolower($clean_type);
-    } else {
-      $variables['callout_class'] = 'callout-info';
-    }
+    $variables['kanban_columns'] = $columns;
   }
 }

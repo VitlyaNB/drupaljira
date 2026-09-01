@@ -1,0 +1,24 @@
+<div class="kanban-board-wrapper">
+  {% set column_titles = {
+    'backlog': 'Backlog',
+    'in_progress': 'In Progress',
+    'review': 'In Review',
+    'done': 'Done'
+  } %}
+
+  <div class="kanban-board">
+    {% for status_key, status_title in column_titles %}
+      <div class="kanban-column" data-status="{{ status_key }}">
+        <h3>{{ status_title }}</h3>
+
+        <div class="kanban-cards-wrapper">
+          {% for card in kanban_columns[status_key] %}
+            <div class="kanban-card" data-nid="{{ card['#nid'] }}" draggable="true">
+              {{ card['#content'] }}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>

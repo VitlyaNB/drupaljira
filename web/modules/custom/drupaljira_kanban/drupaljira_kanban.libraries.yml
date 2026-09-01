@@ -1,0 +1,7 @@
+kanban-dragdrop:
+  js:
+    js/kanban-dragdrop.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery

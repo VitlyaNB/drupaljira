@@ -1,0 +1,24 @@
+uuid: 0d2859e4-bcb1-4058-b3d6-7668cf85d0b3
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - drupaljira_theme
+id: drupaljira_theme_breadcrumbs_2
+theme: drupaljira_theme
+region: content
+weight: 0
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  label_display: visible
+  provider: system
+visibility:
+  request_path:
+    id: request_path
+    negate: true
+    pages: '/project/*/board'

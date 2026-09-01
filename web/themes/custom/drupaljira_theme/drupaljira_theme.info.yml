@@ -1,7 +1,8 @@
 name: 'DrupalJira Theme'
 type: theme
-description: 'Custom theme for DrupalJira project.'
-core_version_requirement: ^10 || ^11
-base theme: olivero
+description: 'Custom Jira-like theme for Drupal'
+core_version_requirement: ^9 || ^10 || ^11
+base theme: false
+
 libraries:
   - drupaljira_theme/global-styling

@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for drupaljira_kanban module.
+ */
+
+/**
+ * Implements hook_views_pre_render().
+ *
+ * @param object $view
+ *   The view object.
+ */
+function drupaljira_kanban_views_pre_render($view) {
+  if ($view->id() === 'task_board') {
+    // Вся дополнительная обработка представления при необходимости.
+  }
+}

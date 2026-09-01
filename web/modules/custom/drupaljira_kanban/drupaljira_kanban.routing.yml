@@ -1,0 +1,6 @@
+drupaljira_kanban.update_status:
+  path: '/api/task/{node}/update-status'
+  defaults:
+    _controller: '\Drupal\drupaljira_kanban\Controller\KanbanController::updateStatus'
+  requirements:
+    _permission: 'edit any task content'
