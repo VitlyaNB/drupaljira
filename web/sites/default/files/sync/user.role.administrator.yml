@@ -1,0 +1,12 @@
+uuid: 54000d16-7a45-4899-b08e-8121d358a549
+langcode: en
+status: true
+dependencies:
+  module:
+    - drupaljira_timelog
+id: administrator
+label: Administrator
+weight: 2
+is_admin: false
+permissions:
+  - 'administer time log entities'

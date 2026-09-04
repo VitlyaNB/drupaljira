@@ -1,0 +1,7 @@
+entity.time_log.collection:
+  path: '/admin/structure/time-log'
+  defaults:
+    _entity_list: 'time_log'
+    _title: 'Time Logs'
+  requirements:
+    _permission: 'administer time log entities'

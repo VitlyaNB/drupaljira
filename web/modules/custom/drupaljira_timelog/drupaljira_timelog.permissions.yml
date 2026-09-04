@@ -1,0 +1,4 @@
+administer time log entities:
+  title: 'Administer TimeLog entities'
+  description: 'Allow full management of TimeLog entities.'
+  restrict access: true

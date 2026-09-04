@@ -1,0 +1,5 @@
+drupaljira_timelog.time_log_add:
+  route_name: entity.time_log.add_form
+  title: 'Add Time Log'
+  appears_on:
+    - entity.time_log.collection

@@ -1,0 +1,6 @@
+entity.time_log.collection:
+  title: 'Time Logs'
+  route_name: entity.time_log.collection
+  description: 'Manage time log entries.'
+  parent: system.admin_structure
+  weight: 100
