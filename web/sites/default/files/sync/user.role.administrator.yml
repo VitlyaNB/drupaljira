@@ -4,9 +4,11 @@ status: true
 dependencies:
   module:
     - drupaljira_timelog
+    - system
 id: administrator
 label: Administrator
 weight: 2
 is_admin: false
 permissions:
+  - 'access administration pages'
   - 'administer time log entities'
