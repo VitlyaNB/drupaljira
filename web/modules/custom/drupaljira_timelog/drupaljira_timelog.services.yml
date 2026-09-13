@@ -2,3 +2,7 @@ services:
   drupaljira.task_stat:
     class: Drupal\drupaljira_timelog\Service\TaskStatService
     arguments: ['@entity_type.manager']
+
+  plugin.manager.report_generator:
+    class: Drupal\drupaljira_timelog\Service\ReportGeneratorManager
+    parent: default_plugin_manager
