@@ -19,10 +19,12 @@ final class TaskStatService {
 
   /**
    * Constructs a new TaskStatService object.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   The entity type manager.
    */
-  public function __construct() {
-    // phpcs:ignore DrupalPractice.Objects.GlobalDrupal.GlobalDrupal
-    $this->entityTypeManager = \Drupal::entityTypeManager();
+  public function __construct(EntityTypeManagerInterface $entityTypeManager) {
+    $this->entityTypeManager = $entityTypeManager;
   }
 
   /**
