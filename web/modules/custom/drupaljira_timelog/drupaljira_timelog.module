@@ -17,22 +17,18 @@ function drupaljira_timelog_form_node_form_alter(array &$form, FormStateInterfac
   $form_object = $form_state->getFormObject();
   $entity = $form_object->getEntity();
 
-  // 1. Ensure entity exists and bundle is strictly 'task'.
   if (!$entity instanceof EntityInterface || $entity->bundle() !== 'task') {
     return;
   }
 
-  // 2. Ensure the entity is saved and has an ID (skip on /node/add/task).
   if ($entity->isNew() || !$entity->id()) {
     return;
   }
 
-  // 3. Build route URL using Drupal standard Url generator.
   $url = Url::fromRoute('drupaljira_timelog.task_log_time', [
     'task' => $entity->id(),
   ]);
 
-  // 4. Add "Log time" link element to the form actions block.
   $form['actions']['log_time'] = [
     '#type' => 'link',
     '#title' => t('Log time'),
