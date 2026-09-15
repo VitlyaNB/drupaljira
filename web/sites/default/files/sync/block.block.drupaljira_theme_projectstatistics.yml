@@ -1,0 +1,20 @@
+uuid: 738ae8ea-16f6-45d5-b324-40bd378d10ee
+langcode: en
+status: true
+dependencies:
+  module:
+    - drupaljira_timelog
+  theme:
+    - drupaljira_theme
+id: drupaljira_theme_projectstatistics
+theme: drupaljira_theme
+region: content
+weight: 0
+provider: null
+plugin: project_stats_block
+settings:
+  id: project_stats_block
+  label: 'Project Statistics'
+  label_display: visible
+  provider: drupaljira_timelog
+visibility: {  }

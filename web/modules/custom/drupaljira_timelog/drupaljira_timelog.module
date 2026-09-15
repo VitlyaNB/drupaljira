@@ -5,6 +5,7 @@
  * Primary module hooks for DrupalJira TimeLog module.
  */
 
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
@@ -89,4 +90,48 @@ function drupaljira_timelog_form_node_form_alter(array &$form, FormStateInterfac
     ],
     '#weight' => 15,
   ];
+}
+
+/**
+ * Helper to invalidate project stats cache tag from time_log entity.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $time_log
+ *   The TimeLog entity.
+ */
+function _drupaljira_timelog_invalidate_project_stats_cache(EntityInterface $time_log): void {
+  if (!$time_log->hasField('task') || $time_log->get('task')->isEmpty()) {
+    return;
+  }
+
+  /** @var \Drupal\Core\Entity\EntityInterface|null $task */
+  $task = $time_log->get('task')->entity;
+  if (!$task instanceof EntityInterface || !$task->hasField('field_project') || $task->get('field_project')->isEmpty()) {
+    return;
+  }
+
+  $project_id = $task->get('field_project')->target_id;
+  if ($project_id) {
+    Cache::invalidateTags(['drupaljira_project_stats:' . $project_id]);
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert() for time_log.
+ */
+function drupaljira_timelog_time_log_insert(EntityInterface $entity): void {
+  _drupaljira_timelog_invalidate_project_stats_cache($entity);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update() for time_log.
+ */
+function drupaljira_timelog_time_log_update(EntityInterface $entity): void {
+  _drupaljira_timelog_invalidate_project_stats_cache($entity);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete() for time_log.
+ */
+function drupaljira_timelog_time_log_delete(EntityInterface $entity): void {
+  _drupaljira_timelog_invalidate_project_stats_cache($entity);
 }

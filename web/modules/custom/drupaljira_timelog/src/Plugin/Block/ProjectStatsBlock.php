@@ -81,7 +81,9 @@ final class ProjectStatsBlock extends BlockBase implements ContainerFactoryPlugi
       '#project' => $project,
       '#cache' => [
         'contexts' => ['route'],
-        'tags' => ['node_list', 'time_log_list'],
+        'tags' => [
+          'drupaljira_project_stats:' . $project->id(),
+        ],
       ],
     ];
   }
