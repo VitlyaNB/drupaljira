@@ -8,7 +8,6 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\drupaljira_timelog\Service\TaskStatService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -20,13 +19,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
   category: new TranslatableMarkup("DrupalJira")
 )]
 final class ProjectStatsBlock extends BlockBase implements ContainerFactoryPluginInterface {
-
-  /**
-   * The task stat service.
-   *
-   * @var \Drupal\drupaljira_timelog\Service\TaskStatService
-   */
-  protected TaskStatService $taskStatService;
 
   /**
    * The current route match.
@@ -44,8 +36,6 @@ final class ProjectStatsBlock extends BlockBase implements ContainerFactoryPlugi
    *   The plugin_id for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\drupaljira_timelog\Service\TaskStatService $taskStatService
-   *   The task stat service.
    * @param \Drupal\Core\Routing\RouteMatchInterface $routeMatch
    *   The current route match.
    */
@@ -53,11 +43,9 @@ final class ProjectStatsBlock extends BlockBase implements ContainerFactoryPlugi
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    TaskStatService $taskStatService,
     RouteMatchInterface $routeMatch,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->taskStatService = $taskStatService;
     $this->routeMatch = $routeMatch;
   }
 
@@ -74,7 +62,6 @@ final class ProjectStatsBlock extends BlockBase implements ContainerFactoryPlugi
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('drupaljira.task_stat'),
       $container->get('current_route_match')
     );
   }
@@ -89,18 +76,9 @@ final class ProjectStatsBlock extends BlockBase implements ContainerFactoryPlugi
       return [];
     }
 
-    $stats = $this->taskStatService->getProjectStats($project);
-
     return [
-      '#theme' => 'item_list',
-      '#title' => $this->t('Project Statistics: @title', ['@title' => $project->label()]),
-      '#items' => [
-        $this->t('Total Tasks: @count', ['@count' => $stats['total_tasks']]),
-        $this->t('Done Tasks: @count', ['@count' => $stats['done_tasks']]),
-        $this->t('Total Estimate: @hours hrs', ['@hours' => number_format((float) $stats['total_estimate'], 2)]),
-        $this->t('Total Logged: @hours hrs', ['@hours' => number_format((float) $stats['total_logged'], 2)]),
-        $this->t('Overestimate Tasks: @count', ['@count' => $stats['overestimate_tasks']]),
-      ],
+      '#theme' => 'drupaljira_project_stats',
+      '#project' => $project,
       '#cache' => [
         'contexts' => ['route'],
         'tags' => ['node_list', 'time_log_list'],

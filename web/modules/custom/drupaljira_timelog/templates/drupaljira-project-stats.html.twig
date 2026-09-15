@@ -1,0 +1,32 @@
+{#
+/**
+ * @file
+ * Default theme implementation for Project Statistics block.
+ *
+ * Available variables:
+ * - project_title: Title of the current project.
+ * - total_tasks: Total count of tasks.
+ * - done_tasks: Count of completed tasks.
+ * - total_estimate_formatted: Total estimated time.
+ * - total_logged_formatted: Total logged time.
+ * - remaining_hours_formatted: Remaining time or overdue indicator.
+ * - overestimate_tasks: Number of tasks that exceeded estimate.
+ * - is_overdue: Boolean flag if total project log exceeds estimate.
+ */
+#}
+<div class="drupaljira-project-stats-card">
+  <h3>{{ 'Project Statistics: @title'|t({'@title': project_title}) }}</h3>
+  <ul class="drupaljira-stats-list">
+    <li><strong>{{ 'Total Tasks:'|t }}</strong> {{ total_tasks }}</li>
+    <li><strong>{{ 'Done Tasks:'|t }}</strong> {{ done_tasks }}</li>
+    <li><strong>{{ 'Total Estimate:'|t }}</strong> {{ total_estimate_formatted }}</li>
+    <li><strong>{{ 'Total Logged:'|t }}</strong> {{ total_logged_formatted }}</li>
+    <li>
+      <strong>{{ 'Remaining Balance:'|t }}</strong>
+      <span class="{{ is_overdue ? 'stats-overdue' : 'stats-ok' }}">
+        {{ remaining_hours_formatted }}
+      </span>
+    </li>
+    <li><strong>{{ 'Overestimated Tasks:'|t }}</strong> {{ overestimate_tasks }}</li>
+  </ul>
+</div>

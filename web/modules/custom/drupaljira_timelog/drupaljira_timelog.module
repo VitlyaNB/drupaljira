@@ -10,6 +10,57 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 
 /**
+ * Implements hook_theme().
+ */
+function drupaljira_timelog_theme(): array {
+  return [
+    'drupaljira_project_stats' => [
+      'variables' => [
+        'project' => NULL,
+        'stats' => [],
+      ],
+      'template' => 'drupaljira-project-stats',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for drupaljira_project_stats.
+ */
+function template_preprocess_drupaljira_project_stats(array &$variables): void {
+  /** @var \Drupal\Core\Entity\EntityInterface|null $project */
+  $project = $variables['project'] ?? NULL;
+
+  if (!$project instanceof EntityInterface) {
+    return;
+  }
+
+  /** @var \Drupal\drupaljira_timelog\Service\TaskStatService $task_stat_service */
+  $task_stat_service = \Drupal::service('drupaljira.task_stat');
+  $raw_stats = $task_stat_service->getProjectStats($project);
+
+  $total_estimate = (float) $raw_stats['total_estimate'];
+  $total_logged = (float) $raw_stats['total_logged'];
+  $remaining = $total_estimate - $total_logged;
+
+  $variables['project_title'] = $project->label();
+  $variables['total_tasks'] = (int) $raw_stats['total_tasks'];
+  $variables['done_tasks'] = (int) $raw_stats['done_tasks'];
+  $variables['total_estimate_formatted'] = sprintf('%.2f hrs', $total_estimate);
+  $variables['total_logged_formatted'] = sprintf('%.2f hrs', $total_logged);
+  $variables['overestimate_tasks'] = (int) $raw_stats['overestimate_tasks'];
+
+  if ($remaining < 0) {
+    $variables['remaining_hours_formatted'] = sprintf('OVERDUE by %.2f hrs', abs($remaining));
+    $variables['is_overdue'] = TRUE;
+  }
+  else {
+    $variables['remaining_hours_formatted'] = sprintf('%.2f hrs remaining', $remaining);
+    $variables['is_overdue'] = FALSE;
+  }
+}
+
+/**
  * Implements hook_form_BASE_FORM_ID_alter() for node_form.
  */
 function drupaljira_timelog_form_node_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
