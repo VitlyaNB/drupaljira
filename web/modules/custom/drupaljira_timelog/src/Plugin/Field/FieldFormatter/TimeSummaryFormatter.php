@@ -7,6 +7,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\drupaljira_timelog\Service\DurationFormatter;
 use Drupal\drupaljira_timelog\Service\TaskStatService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -28,6 +29,13 @@ final class TimeSummaryFormatter extends FormatterBase implements ContainerFacto
   protected TaskStatService $taskStatService;
 
   /**
+   * The duration formatter service.
+   *
+   * @var \Drupal\drupaljira_timelog\Service\DurationFormatter
+   */
+  protected DurationFormatter $durationFormatter;
+
+  /**
    * Constructs a new TimeSummaryFormatter instance.
    *
    * @param string $plugin_id
@@ -46,6 +54,8 @@ final class TimeSummaryFormatter extends FormatterBase implements ContainerFacto
    *   Any third party settings.
    * @param \Drupal\drupaljira_timelog\Service\TaskStatService $taskStatService
    *   The task stat service.
+   * @param \Drupal\drupaljira_timelog\Service\DurationFormatter $durationFormatter
+   *   The duration formatter service.
    */
   public function __construct(
     $plugin_id,
@@ -56,9 +66,11 @@ final class TimeSummaryFormatter extends FormatterBase implements ContainerFacto
     $view_mode,
     array $third_party_settings,
     TaskStatService $taskStatService,
+    DurationFormatter $durationFormatter,
   ) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
     $this->taskStatService = $taskStatService;
+    $this->durationFormatter = $durationFormatter;
   }
 
   /**
@@ -78,7 +90,8 @@ final class TimeSummaryFormatter extends FormatterBase implements ContainerFacto
       $configuration['label'],
       $configuration['view_mode'],
       $configuration['third_party_settings'],
-      $container->get('drupaljira.task_stat')
+      $container->get('drupaljira.task_stat'),
+      $container->get('drupaljira.duration_formatter')
     );
   }
 
@@ -94,23 +107,8 @@ final class TimeSummaryFormatter extends FormatterBase implements ContainerFacto
       $logged = $this->taskStatService->getLoggedHours($task);
       $remaining = $this->taskStatService->getRemainingEstimate($task);
 
-      if ($remaining < 0) {
-        $summary = $this->t('@estimate hours (@logged hour written off, OVERDUE by @overdue hours)', [
-          '@estimate' => number_format($estimate, 2),
-          '@logged' => number_format($logged, 2),
-          '@overdue' => number_format(abs($remaining), 2),
-        ]);
-      }
-      else {
-        $summary = $this->t('@estimate hours (@logged hour written off, @remaining hours left)', [
-          '@estimate' => number_format($estimate, 2),
-          '@logged' => number_format($logged, 2),
-          '@remaining' => number_format($remaining, 2),
-        ]);
-      }
-
       $elements[$delta] = [
-        '#markup' => $summary,
+        '#markup' => $this->durationFormatter->formatSummary($estimate, $logged, $remaining),
       ];
     }
 

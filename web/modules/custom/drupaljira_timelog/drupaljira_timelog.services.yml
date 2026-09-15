@@ -3,6 +3,10 @@ services:
     class: Drupal\drupaljira_timelog\Service\TaskStatService
     arguments: ['@entity_type.manager']
 
+  drupaljira.duration_formatter:
+    class: Drupal\drupaljira_timelog\Service\DurationFormatter
+    arguments: ['@string_translation']
+
   plugin.manager.report_generator:
     class: Drupal\drupaljira_timelog\Service\ReportGeneratorManager
     parent: default_plugin_manager

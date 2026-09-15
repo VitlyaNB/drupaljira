@@ -38,6 +38,9 @@ function template_preprocess_drupaljira_project_stats(array &$variables): void {
 
   /** @var \Drupal\drupaljira_timelog\Service\TaskStatService $task_stat_service */
   $task_stat_service = \Drupal::service('drupaljira.task_stat');
+  /** @var \Drupal\drupaljira_timelog\Service\DurationFormatter $duration_formatter */
+  $duration_formatter = \Drupal::service('drupaljira.duration_formatter');
+
   $raw_stats = $task_stat_service->getProjectStats($project);
 
   $total_estimate = (float) $raw_stats['total_estimate'];
@@ -47,16 +50,20 @@ function template_preprocess_drupaljira_project_stats(array &$variables): void {
   $variables['project_title'] = $project->label();
   $variables['total_tasks'] = (int) $raw_stats['total_tasks'];
   $variables['done_tasks'] = (int) $raw_stats['done_tasks'];
-  $variables['total_estimate_formatted'] = sprintf('%.2f hrs', $total_estimate);
-  $variables['total_logged_formatted'] = sprintf('%.2f hrs', $total_logged);
+  $variables['total_estimate_formatted'] = $duration_formatter->format($total_estimate);
+  $variables['total_logged_formatted'] = $duration_formatter->format($total_logged);
   $variables['overestimate_tasks'] = (int) $raw_stats['overestimate_tasks'];
 
   if ($remaining < 0) {
-    $variables['remaining_hours_formatted'] = sprintf('OVERDUE by %.2f hrs', abs($remaining));
+    $variables['remaining_hours_formatted'] = (string) t('OVERDUE by @overdue', [
+      '@overdue' => $duration_formatter->format(abs($remaining)),
+    ]);
     $variables['is_overdue'] = TRUE;
   }
   else {
-    $variables['remaining_hours_formatted'] = sprintf('%.2f hrs remaining', $remaining);
+    $variables['remaining_hours_formatted'] = (string) t('@remaining remaining', [
+      '@remaining' => $duration_formatter->format($remaining),
+    ]);
     $variables['is_overdue'] = FALSE;
   }
 }
